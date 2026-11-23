@@ -1,9 +1,9 @@
 /* File SEMENTARA untuk ngetes bagian Anggota 1. Jangan dipakai sebagai main.c final. */
 #include <stdio.h>
 #include <stdlib.h>
-#include "models.h"
-#include "file_io.h"
-#include "auth.h"
+#include "../include/models.h"
+#include "../include/file_io.h"
+#include "../include/auth.h"
 
 int main(void)
 {

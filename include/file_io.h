@@ -3,10 +3,10 @@
 
 #include "models.h"
 
-#define FILE_BUKU_ASLI  "Books.txt"        /* dataset master dari soal */
-#define FILE_BUKU       "books_data.txt"   /* file operasional (ada kolom stok) */
-#define FILE_USER       "user.txt"
-#define FILE_PEMINJAMAN "peminjaman.txt"
+#define FILE_BUKU_ASLI  "../data/Books.txt"        /* dataset master dari soal */
+#define FILE_BUKU       "../data/books_data.txt"   /* file operasional (ada kolom stok) */
+#define FILE_USER       "../data/user.txt"
+#define FILE_PEMINJAMAN "../data/peminjaman.txt"
 
 /* Semua fungsi muat/simpan: return 1 jika berhasil, 0 jika gagal.
    Array hasil muat_* dialokasikan dengan malloc -> pemanggil wajib free(). */

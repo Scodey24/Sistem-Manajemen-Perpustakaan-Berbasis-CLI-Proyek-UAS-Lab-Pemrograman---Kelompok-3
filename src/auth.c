@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "auth.h"
+#include "../include/auth.h"
 
 #define MAKS_PERCOBAAN 3
 

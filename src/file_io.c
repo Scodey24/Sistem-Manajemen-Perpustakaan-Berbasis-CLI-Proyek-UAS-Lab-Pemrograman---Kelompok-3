@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "file_io.h"
+#include "../include/file_io.h"
 
 #define BUFFER_BARIS    2048
 #define KAPASITAS_AWAL  64
