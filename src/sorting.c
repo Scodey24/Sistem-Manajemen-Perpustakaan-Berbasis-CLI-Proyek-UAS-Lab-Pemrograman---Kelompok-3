@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "sorting.h"
+#include "../include/sorting.h"
 
 static int compare_books(const Buku *a, const Buku *b, SortField field, SortOrder order) {
     int cmp = 0;
