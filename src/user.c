@@ -180,8 +180,13 @@ void pinjam_buku(
         return;
     }
 
-    input_teks("Tanggal Pinjam (DD-MM-YYYY): ",
+     input_teks("Tanggal Pinjam (DD-MM-YYYY): ",
                tanggal, sizeof(tanggal));
+
+     if (!validasi_tanggal_dd_mm_yyyy(tanggal)) {
+        printf("Format tanggal tidak valid. Gunakan DD-MM-YYYY (contoh: 24-11-2026).\n");
+        return;
+    }
 
     if (tanggal[0] == '\0') {
         printf("Tanggal tidak boleh kosong.\n");
