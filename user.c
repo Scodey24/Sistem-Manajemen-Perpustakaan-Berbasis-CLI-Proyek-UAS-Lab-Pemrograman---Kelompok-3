@@ -180,7 +180,6 @@ void pinjam_buku(
         return;
     }
 
-    /* Meminta tanggal peminjaman */
     input_teks("Tanggal Pinjam (DD-MM-YYYY): ",
                tanggal, sizeof(tanggal));
 
@@ -188,8 +187,7 @@ void pinjam_buku(
         printf("Tanggal tidak boleh kosong.\n");
         return;
     }
-
-    /* Menyiapkan transaksi baru */
+    
     transaksi.id_peminjaman =
         id_berikutnya(*peminjaman, *jumlah_peminjaman);
 
@@ -211,14 +209,11 @@ void pinjam_buku(
 
     *peminjaman = temp;
 
-    /* Menyimpan transaksi baru */
     (*peminjaman)[*jumlah_peminjaman] = transaksi;
     (*jumlah_peminjaman)++;
 
-    /* Mengurangi stok buku */
     buku[indeks].stok--;
 
-    /* Menyimpan perubahan ke file */
     if (!simpan_buku(FILE_BUKU, buku, jumlah_buku) ||
         !simpan_peminjaman(FILE_PEMINJAMAN,
                            *peminjaman, *jumlah_peminjaman)) {
@@ -254,7 +249,6 @@ void kembalikan_buku(
 
     printf("\n========== PENGEMBALIAN BUKU ==========\n");
 
-    /* Menampilkan peminjaman milik user */
     riwayat_peminjaman(
         user_login, peminjaman, jumlah_peminjaman
     );
@@ -278,7 +272,6 @@ void kembalikan_buku(
         return;
     }
 
-    /* Memastikan transaksi milik user yang login */
     if (strcmp(peminjaman[indeks_pinjam].username,
                user_login->username) != 0) {
 
@@ -286,7 +279,6 @@ void kembalikan_buku(
         return;
     }
 
-    /* Memastikan buku belum dikembalikan */
     if (strcmp(peminjaman[indeks_pinjam].status,
                "DIPINJAM") != 0) {
 
@@ -294,7 +286,6 @@ void kembalikan_buku(
         return;
     }
 
-    /* Mencari buku berdasarkan ID */
     indeks_buku = cari_indeks_buku(
         buku,
         jumlah_buku,
@@ -306,13 +297,10 @@ void kembalikan_buku(
         return;
     }
 
-    /* Mengubah status peminjaman */
     strcpy(peminjaman[indeks_pinjam].status, "KEMBALI");
 
-    /* Menambah stok buku */
     buku[indeks_buku].stok++;
 
-    /* Menyimpan perubahan */
     if (!simpan_buku(FILE_BUKU, buku, jumlah_buku) ||
         !simpan_peminjaman(FILE_PEMINJAMAN,
                            peminjaman, jumlah_peminjaman)) {
@@ -352,7 +340,6 @@ void riwayat_peminjaman(
 
     for (i = 0; i < jumlah_peminjaman; i++) {
 
-        /* Hanya menampilkan transaksi user login */
         if (strcmp(peminjaman[i].username,
                    user_login->username) == 0) {
 
