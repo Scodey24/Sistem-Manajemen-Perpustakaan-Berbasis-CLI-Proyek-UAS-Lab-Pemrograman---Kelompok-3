@@ -7,7 +7,6 @@
 #include "../include/file_io.h"
 #include "../include/sorting.h"
 
-/* Membersihkan sisa input */
 static void bersihkan_input(void)
 {
     int c;
@@ -16,7 +15,6 @@ static void bersihkan_input(void)
     }
 }
 
-/* Fungsi input teks */
 static void input_teks(const char *pesan, char *tujuan, int ukuran)
 {
     printf("%s", pesan);
@@ -33,7 +31,6 @@ static void input_teks(const char *pesan, char *tujuan, int ukuran)
     }
 }
 
-/* Fungsi input angka */
 static int input_angka(const char *pesan, int *hasil)
 {
     printf("%s", pesan);
@@ -47,7 +44,6 @@ static int input_angka(const char *pesan, int *hasil)
     return 1;
 }
 
-/* Mencari indeks buku berdasarkan OCAID */
 static int cari_indeks_buku(
     const Buku *buku,
     int jumlah_buku,
@@ -65,7 +61,6 @@ static int cari_indeks_buku(
     return -1;
 }
 
-/* 1. CREATE: Tambah Buku */
 void admin_tambah_buku(Buku **buku, int *jumlah_buku)
 {
     Buku baru;
@@ -217,7 +212,6 @@ void admin_edit_buku(Buku *buku, int jumlah_buku)
     }
 }
 
-/* 4. DELETE: Hapus Buku */
 void admin_hapus_buku(Buku **buku, int *jumlah_buku)
 {
     char id[PANJANG_OCAID];
@@ -261,7 +255,6 @@ void admin_hapus_buku(Buku **buku, int *jumlah_buku)
     }
 }
 
-/* 5. LAPORAN PEMINJAMAN */
 void admin_lihat_laporan_peminjaman(
     const Peminjaman *peminjaman,
     int jumlah_peminjaman

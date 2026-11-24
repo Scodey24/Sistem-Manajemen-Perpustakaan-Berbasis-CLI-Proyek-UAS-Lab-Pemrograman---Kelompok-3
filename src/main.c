@@ -47,6 +47,10 @@ int main(void) {
         printf("Pilih menu: ");
 
         if (scanf("%d", &main_choice) != 1) {
+            if (feof(stdin)) {
+                main_choice = 2;
+                continue;
+            }
             clear_stdin();
             printf("[Error] Masukkan angka 1 atau 2.\n");
             continue;

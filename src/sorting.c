@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include "../include/sorting.h"
+#include "sorting.h"
+
+static void bersihkan_buffer_baris(void) {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+    }
+}
 
 static int compare_books(const Buku *a, const Buku *b, SortField field, SortOrder order) {
     int cmp = 0;
@@ -112,18 +118,27 @@ void menu_sort_books(Buku *arr, int n) {
         return;
     }
 
-    int algo_in = 1, field_in = 1, order_in = 1;
+    int algo_in = -1, field_in = -1, order_in = -1;
 
     printf("\n=== PENGURUTAN KATALOG BUKU ===\n");
     printf("Pilih Algoritma:\n");
     printf("1. Insertion Sort\n");
     printf("2. Bubble Sort\n");
     printf("3. Selection Sort\n");
-    printf("Pilihan: ");
-    if (scanf("%d", &algo_in) != 1) {
-        while (getchar() != '\n');
-        algo_in = 1;
-    }
+    do {
+        printf("Pilihan: ");
+        if (scanf("%d", &algo_in) != 1) {
+            if (feof(stdin)) return;
+            bersihkan_buffer_baris();
+            algo_in = -1;
+            printf("[Error] Masukkan angka 1 sampai 3.\n");
+            continue;
+        }
+        bersihkan_buffer_baris();
+        if (algo_in < 1 || algo_in > 3) {
+            printf("[Error] Pilihan tidak tersedia. Masukkan angka 1-3.\n");
+        }
+    } while (algo_in < 1 || algo_in > 3);
 
     printf("\nPilih Atribut:\n");
     printf("1. ID Buku (ocaid)\n");
@@ -131,24 +146,41 @@ void menu_sort_books(Buku *arr, int n) {
     printf("3. Tahun Terbit (year)\n");
     printf("4. Jumlah Halaman (page_count)\n");
     printf("5. Stok Buku (stok)\n");
-    printf("Pilihan: ");
-    if (scanf("%d", &field_in) != 1) {
-        while (getchar() != '\n');
-        field_in = 1;
-    }
+    do {
+        printf("Pilihan: ");
+        if (scanf("%d", &field_in) != 1) {
+            if (feof(stdin)) return;
+            bersihkan_buffer_baris();
+            field_in = -1;
+            printf("[Error] Masukkan angka 1 sampai 5.\n");
+            continue;
+        }
+        bersihkan_buffer_baris();
+        if (field_in < 1 || field_in > 5) {
+            printf("[Error] Pilihan tidak tersedia. Masukkan angka 1-5.\n");
+        }
+    } while (field_in < 1 || field_in > 5);
 
     printf("\nPilih Urutan:\n");
     printf("1. Ascending (A-Z / Terkecil ke Terbesar)\n");
     printf("0. Descending (Z-A / Terbesar ke Terkecil)\n");
-    printf("Pilihan: ");
-    if (scanf("%d", &order_in) != 1) {
-        while (getchar() != '\n');
-        order_in = 1;
-    }
-    while (getchar() != '\n');
+    do {
+        printf("Pilihan: ");
+        if (scanf("%d", &order_in) != 1) {
+            if (feof(stdin)) return;
+            bersihkan_buffer_baris();
+            order_in = -1;
+            printf("[Error] Masukkan angka 0 atau 1.\n");
+            continue;
+        }
+        bersihkan_buffer_baris();
+        if (order_in != 0 && order_in != 1) {
+            printf("[Error] Pilihan tidak tersedia. Masukkan 0 atau 1.\n");
+        }
+    } while (order_in != 0 && order_in != 1);
 
-    SortAlgorithm algo = (algo_in >= 1 && algo_in <= 3) ? (SortAlgorithm)algo_in : SORT_INSERTION;
-    SortField field = (field_in >= 1 && field_in <= 5) ? (SortField)field_in : SORT_BY_OCAID;
+    SortAlgorithm algo = (SortAlgorithm)algo_in;
+    SortField field = (SortField)field_in;
     SortOrder order = (order_in == 0) ? SORT_DESC : SORT_ASC;
 
     sort_books(arr, n, algo, field, order);
