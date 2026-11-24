@@ -30,6 +30,38 @@ static void input_teks(const char *pesan, char *teks, int ukuran)
     }
 }
 
+static int validasi_tanggal_dd_mm_yyyy(const char *tgl)
+{
+    int hari = 0, bulan = 0, tahun = 0;
+    char extra;
+
+    if (tgl == NULL || strlen(tgl) != 10) {
+        return 0;
+    }
+
+    if (tgl[2] != '-' || tgl[5] != '-') {
+        return 0;
+    }
+
+    if (sscanf(tgl, "%2d-%2d-%4d%c", &hari, &bulan, &tahun, &extra) != 3) {
+        return 0;
+    }
+
+    if (bulan < 1 || bulan > 12) {
+        return 0;
+    }
+
+    if (hari < 1 || hari > 31) {
+        return 0;
+    }
+
+    if (tahun < 1900 || tahun > 2100) {
+        return 0;
+    }
+
+    return 1;
+}
+
 static void tampilkan_buku(const Buku *buku, int jumlah_buku)
 {
     int i;
@@ -105,7 +137,7 @@ static unsigned int id_berikutnya(
 }
 
 /* =====================================
-   1. FITUR CARI BUKU
+1. FITUR CARI BUKU
    ===================================== */
 
 void cari_buku(const Buku *buku, int jumlah_buku)
@@ -142,7 +174,7 @@ void cari_buku(const Buku *buku, int jumlah_buku)
 }
 
 /* =====================================
-   2. FITUR PINJAM BUKU
+2. FITUR PINJAM BUKU
    ===================================== */
 
 void pinjam_buku(
@@ -180,19 +212,14 @@ void pinjam_buku(
         return;
     }
 
-     input_teks("Tanggal Pinjam (DD-MM-YYYY): ",
+    input_teks("Tanggal Pinjam (DD-MM-YYYY): ",
                tanggal, sizeof(tanggal));
 
-     if (!validasi_tanggal_dd_mm_yyyy(tanggal)) {
+    if (!validasi_tanggal_dd_mm_yyyy(tanggal)) {
         printf("Format tanggal tidak valid. Gunakan DD-MM-YYYY (contoh: 24-11-2026).\n");
         return;
     }
 
-    if (tanggal[0] == '\0') {
-        printf("Tanggal tidak boleh kosong.\n");
-        return;
-    }
-    
     transaksi.id_peminjaman =
         id_berikutnya(*peminjaman, *jumlah_peminjaman);
 
@@ -238,7 +265,7 @@ void pinjam_buku(
 }
 
 /* =====================================
-   3. FITUR KEMBALIKAN BUKU
+3. FITUR KEMBALIKAN BUKU
    ===================================== */
 
 void kembalikan_buku(
@@ -325,7 +352,7 @@ void kembalikan_buku(
 }
 
 /* =====================================
-   4. FITUR RIWAYAT PEMINJAMAN
+4. FITUR RIWAYAT PEMINJAMAN
    ===================================== */
 
 void riwayat_peminjaman(
@@ -364,7 +391,7 @@ void riwayat_peminjaman(
 }
 
 /* =====================================
-   5. MENU USER
+5. MENU USER
    ===================================== */
 
 void menu_user(
@@ -374,7 +401,7 @@ void menu_user(
     Peminjaman **peminjaman,
     int *jumlah_peminjaman)
 {
-    int pilihan;
+    int pilihan = 0;
 
     do {
         printf("\n================================\n");
@@ -394,6 +421,7 @@ void menu_user(
         if (scanf("%d", &pilihan) != 1) {
             printf("Input tidak valid.\n");
             bersihkan_input();
+            pilihan = -1;
             continue;
         }
 
@@ -439,6 +467,7 @@ void menu_user(
 
             default:
                 printf("Pilihan tidak tersedia.\n");
+                break;
         }
 
     } while (pilihan != 5);
